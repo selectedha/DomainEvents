@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<SampleContext>(c => c.UseSqlServer("TrustServerCertificate=True;Password=h0t@@TL7X5At;User ID=ha;Initial Catalog=DomainEvents;Data Source=db.avang.ir\\devops"));
 builder.Services.AddScoped<PersonService>();
+builder.Services.AddTransient<IDomainEventDispatcher, DomainEventDispatcher>();
 builder.Services.AddTransient<IDomainEventHandler<PersonCreated>, WritePerssonCreatedToConsole>();
 builder.Services.AddTransient<IDomainEventHandler<PersonCreated>, WritePerssonCreatedToFile>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
