@@ -15,6 +15,7 @@ builder.Services.AddScoped<PersonService>();
 builder.Services.AddTransient<IDomainEventDispatcher, DomainEventDispatcher>();
 builder.Services.AddTransient<IDomainEventHandler<PersonCreated>, WritePerssonCreatedToConsole>();
 builder.Services.AddTransient<IDomainEventHandler<PersonCreated>, WritePerssonCreatedToFile>();
+builder.Services.AddTransient<IDomainEventHandler<FirstNameChanged>, WriteFirstNameChangedToConsole>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

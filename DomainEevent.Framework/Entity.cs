@@ -11,6 +11,11 @@
             _events.Add(@event);
         }
 
+        public void ClearEvent()
+        {
+            _events.Clear();
+        }
+
         #region Equality
         public bool Equals(Entity? other)
             => this == other;

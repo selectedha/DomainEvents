@@ -10,26 +10,23 @@ namespace DomainEvents.Core.ApplicationServices
     {
         private readonly SampleContext _ctx;
         private readonly ILogger<PersonService> _logger;
-        private readonly IDomainEventDispatcher _domainEventDispatcher;
 
-        public PersonService(SampleContext ctx, ILogger<PersonService> logger, IDomainEventDispatcher domainEventDispatcher)
+        public PersonService(SampleContext ctx, ILogger<PersonService> logger)
         {
             _ctx = ctx;
             _logger = logger;
-            _domainEventDispatcher = domainEventDispatcher;
         }
 
         public async Task AddPerson(string firstName, string lastName)
         {
             Person person = new Person(firstName, lastName);
-            await _domainEventDispatcher.Dispatch(person.Events);
+            _ctx.People.Add(person);
             await _ctx.SaveChangesAsync();
         }
 
         public async Task SetFirstName(long id, string firstName)
         {
             var person = _ctx.People.FirstOrDefault(x => x.Id == id);
-            await _domainEventDispatcher.Dispatch(person.Events);
             person.ChangeFirstName(firstName);
             await _ctx.SaveChangesAsync();
         }
@@ -37,7 +34,6 @@ namespace DomainEvents.Core.ApplicationServices
         public async Task SetLastName(long id, string lastName)
         {
             var person = _ctx.People.FirstOrDefault(x => x.Id == id);
-            await _domainEventDispatcher.Dispatch(person.Events);
             person.ChangeLastName(lastName);
             await _ctx.SaveChangesAsync();
 
